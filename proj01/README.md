@@ -32,4 +32,8 @@ Para a leitura e escrita de arquivos de imagem PGMB no projeto, foi utilizado o 
 
 ### Aplicador de Filtro
 
-O código (filter.c)[./filter.c] é o aplicador de filtros. O filtro definido para a execução da forma como está escrito é um filtro detector de bordas, entretanto pode-se muda-lo apenas comentando e descomentando a atribuição da variável global `filter`.
+O código [filter.c](./filter.c) é o aplicador de filtros. O filtro definido para a execução da forma como está escrito é um filtro detector de bordas, entretanto pode-se muda-lo apenas comentando e descomentando a atribuição da variável global `filter`.
+
+## Exemplo de aplicação
+
+O programa foi compilado e rodado sobre a imagem [baboon.pgm](data/baboon.pgm) para os 3 filtros: desfoque, realçador de forma, detector de bordas. O resultado pode ser encontrado [na pasta](output_examples)

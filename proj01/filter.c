@@ -12,9 +12,9 @@
 #define FILTER_SIZE 3
 // variáveis globais
 // you can change the filter type by edit the comments below: 
-// float filter[3][3] = {{0, -0.5, 0}, {-0.5, 3, -0.5}, {0, -0.5, 0}};
-float filter[3][3] = {{-1, -2, -1}, {0, 0, 0}, {1, 2, 1}};
-// float filter[3][3] = {{0.111111, 0.111111, 0.111111}, {0.111111, 0.111111, 0.111111}, {0.111111, 0.111111, 0.111111}};
+// float filter[3][3] = {{0, -0.5, 0}, {-0.5, 3, -0.5}, {0, -0.5, 0}}; // sharpening filter
+float filter[3][3] = {{-1, -2, -1}, {0, 0, 0}, {1, 2, 1}}; // edge detection filter
+// float filter[3][3] = {{0.111111, 0.111111, 0.111111}, {0.111111, 0.111111, 0.111111}, {0.111111, 0.111111, 0.111111}}; // blur filter
 
 PGMImage *input_pgm, *output_pgm;
 

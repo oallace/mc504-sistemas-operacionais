@@ -9,7 +9,7 @@ pgm.o: pgm.c
 	gcc -c pgm.c
 
 filter.o: filter.c
-	gcc -c filter.c
+	gcc -lpthread -c filter.c
 
 clean:
 	rm -f filter filter.o pgm.o

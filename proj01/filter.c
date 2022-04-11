@@ -2,7 +2,6 @@
 // Aplicador de filtros a uma imagem  utilizando pthreads
 // Formato de imagem de Entrada: BMP
 #include "pgm.h"
-#include <bits/pthreadtypes.h>
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -12,10 +11,11 @@
 #define N_THREADS 3
 #define FILTER_SIZE 3
 // variáveis globais
-
+// you can change the filter type by edit the comments below: 
 // float filter[3][3] = {{0, -0.5, 0}, {-0.5, 3, -0.5}, {0, -0.5, 0}};
 float filter[3][3] = {{-1, -2, -1}, {0, 0, 0}, {1, 2, 1}};
 // float filter[3][3] = {{0.111111, 0.111111, 0.111111}, {0.111111, 0.111111, 0.111111}, {0.111111, 0.111111, 0.111111}};
+
 PGMImage *input_pgm, *output_pgm;
 
 // Thread Function: Apply the filter in input image.
@@ -74,14 +74,16 @@ PGMImage *alloc_output() {
 
 int main() {
   // Image reading:
-  const char *ipfile;
-  ipfile = "./data/baboon.pgm";
-  printf("\tip file : %s\n", ipfile);
+  char ipfile[250];
+  printf("Insert the PGMB Image path: ");
+  scanf(" %s", ipfile);
 
   // Process the image and print its details
   input_pgm = alloc_pgm();
   if (openPGM(input_pgm, ipfile)) {
     printImageDetails(input_pgm, ipfile);
+  } else {
+    exit(EXIT_FAILURE);
   }
 
   // Creates the structure to output image

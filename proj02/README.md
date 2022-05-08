@@ -132,7 +132,7 @@ int main() {
 
     // Exemplo de um dia de cinema
     pthread_t e1, e2, e3, e4, e5, e6, e7;
-    pthread_t l1, l2;
+    pthread_t l1;
     printf("Dia de Cinema:\n\n");
     imprime_cinema();
     pthread_create(&e1,NULL, espectador,NULL);
@@ -144,7 +144,6 @@ int main() {
     pthread_create(&e5,NULL, espectador,NULL);
     pthread_create(&e6,NULL, espectador,NULL);
     sleep(1);
-    pthread_create(&l2,NULL, lanterninha,NULL);
     pthread_create(&e7,NULL, espectador,NULL);
     pthread_join(e1,NULL);
     pthread_join(e2,NULL);
@@ -154,7 +153,6 @@ int main() {
     pthread_join(e6,NULL);
     pthread_join(e7,NULL);
     pthread_join(l1,NULL);
-    pthread_join(l2,NULL);
     // Destrói os semáforos utilizados
     sem_destroy(&mutex);
     sem_destroy(&vendaIngresso);
@@ -170,10 +168,8 @@ Função main com um exemplo.
 Sobre o exemplo proposto:
 - 4 espectadores tentam entrar na sala de cinema. Somente 3 devem conseguir entrar e um deve esperar a sua vez
 - Após um tempo menor do que o tempo de permanência dos espectadores na sala, o lanterninha decide dar a manutenção da sala, portanto interrompe a venda de ingressos. Por isso, o espectador que estava esperando deve esperar agora o fim da manutenção para poder entrar na sala
-- Um outro espectador decide entrar na sala
+- Dois outros espectadores decidem entrar na sala
 - Após um tempo, mais um espectador resolve entrar na sala
-- Após um tempo, há novamente a manutenção da sala
-- Por fim, mais um último espectador tenta entrar na sala
 
 ## Saída
 
@@ -234,26 +230,6 @@ Dia de Cinema:
 
 ||.....||
 |       |
-| _ _ _ |
-|_______|
-
-||#####||
-|       |
-| _ _ _ |
-|_______|
-
-||.....||
-|       |
-| _ _ _ |
-|_______|
-
-||.....||
-|       |
-| * _ _ |
-|_______|
-
-||.....||
-|       |
 | * * _ |
 |_______|
 
@@ -276,6 +252,16 @@ Dia de Cinema:
 |       |
 | _ _ _ |
 |_______|
+
+||.....||
+|       |
+| * _ _ |
+|_______|
+
+||.....||
+|       |
+| _ _ _ |
+|_______|
 ```
 
 Vamos checar se a animação obedece as regras do problema.
@@ -286,4 +272,4 @@ Vamos checar se a animação obedece as regras do problema.
 -  Quando um lanterninha decide fazer a manutenção da sala, ele interrompe a entrada de novos espectadores até que conclua o seu trabalho.
   -  Note que aquele que estava esperando a sua vez no início, agora espera o fim da manutenção da sala para entrar.
 -  Quando decide fazer a manutenção da sala, o lanterninha espera que a sala se esvazie
-  -  Note que a manutenção só é realizada ap
+  -  Note que a manutenção só é realizada após a saída de todos os espectadores da sala

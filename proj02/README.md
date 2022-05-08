@@ -47,7 +47,8 @@ sem_t mutex, haVaga, vendaIngresso, salaVazia, impressaoLiberada;
 // Contador de pessoas no cinema
 int espectadores = 0;
 int emExibcao = 1;
-```c
+
+```c++
 
 ## Saída
 

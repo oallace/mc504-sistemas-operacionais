@@ -142,7 +142,6 @@ int main() {
     sleep(1);
     pthread_create(&l1,NULL, lanterninha,NULL);
     pthread_create(&e5,NULL, espectador,NULL);
-    sleep(1);
     pthread_create(&e6,NULL, espectador,NULL);
     sleep(1);
     pthread_create(&l2,NULL, lanterninha,NULL);

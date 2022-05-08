@@ -13,5 +13,5 @@ Além disso, o lanterninha responsável pela sala pode adentrar para fazer a man
 
 ## Animação
 
-o código proposto, {cinema.c}[./cinema.c], propõe uma animação com caracteres conforme exemplificado abaixo:
+o código proposto, [cinema.c](./cinema.c), propõe uma animação com caracteres conforme exemplificado abaixo:
 

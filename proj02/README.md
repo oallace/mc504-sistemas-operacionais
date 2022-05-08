@@ -3,6 +3,8 @@
 
 Problema inspirado no clássico problema dos Leitores-Escritores. 
 
+![Sala de cinema com cadeiras vazias.](/data/cinema.jpg "Imagem de Felix Mooneeram, disponívem em unsplash.com").
+
 Em um festival de cinema, há uma sala com N cadeiras. Espectadores podem entrar na sala enquanto houver cadeiras livres e podem permanecer lá o tempo que quiserem. Caso um espectador tente entrar em uma sala lotada, ele deve esperar até que alguém saia e , então, libere uma cadeira. Em algum momento, algum lanterninha responsável pela entrada na sala pode decidir realizar a manutenção da sala (isto pode ser a limpeza ou a troca do filme exibido etc.). Quando decide fazer a manutenção, o lanterninha interrompe a entrada de qualquer outra pessoa na sala e espera até que todos os espectadores saiam da sala para fazer seu trabalho. Suponha que os filmes duram o suficiente para a permanência de todos os espectadores.
 
 Em resumo, o problema pode ser entendido a partir das seguintes regras:

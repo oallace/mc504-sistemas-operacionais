@@ -1,15 +1,16 @@
 # Proj02 - Animação Multithread com Semáforos
 ## Festival de Cinema
 
-Problema inspirado no problema clássico dos Leitores-Escritores. Suponha uma sala em um festival de cinema. Esta sala tem um total de N vagas. Enquanto houver vagas, espectadores podem entrar na sala, assistir o que está sendo exibido e sair quando quiser.
-Além disso, o lanterninha responsável pela sala pode adentrar para fazer a manutenção adequeada e trocar o filme quando necessário.
+Problema inspirado no clássico problema dos Leitores-Escritores. 
 
-### Regras do Festival
+Em um festival de cinema, há uma sala com N cadeiras. Espectadores podem entrar na sala enquanto houver cadeiras livres e podem permanecer lá o tempo que quiserem. Caso um espectador tente entrar em uma sala lotada, ele deve esperar até que alguém saia e , então, libere uma cadeira. Em algum momento, algum lanterninha responsável pela entrada na sala pode decidir realizar a manutenção da sala (isto pode ser a limpeza ou a troca do filme exibido etc.). Quando decide fazer a manutenção, o lanterninha interrompe a entrada de qualquer outra pessoa na sala e espera até que todos os espectadores saiam da sala para fazer seu trabalho. Suponha que os filmes duram o suficiente para a permanência de todos os espectadores.
 
-- Sendo N o número de vagas na sala de cinema, N espectadores podem assistir ao filme simultaneamente
-- Caso um espectador tente entrar em uma sala lotada, deve esperar alguma vaga ser liberada
-- O lanterninha deve esperar a sala esvaziar para adentrar a sala
-- Assim que o lanterninha precisar dar manutenção à sala, ele impede a entrada de novos espectadores  e espera o esvaziamento da sala. Após a manutenção, retoma as atividades da sala
+Em resumo, o problema pode ser entendido a partir das seguintes regras:
+
+1. Sendo N o número de vagas na sala de cinema, N espectadores podem assistir ao filme simultaneamente, permanecendo na sala o tempo que quiserem.
+2. Caso um espectador tente entrar em uma sala lotada, deve esperar alguma vaga ser liberada.
+3. O lanterninha deve esperar a sala esvaziar para adentrar a sala.
+4. Assim que o lanterninha precisar dar manutenção à sala, ele impede a entrada de pessoas na sala (incluindo outros lanterninhas). Após a manutenção, retoma as atividades da sala.
 
 ## Animação
 
@@ -36,7 +37,7 @@ o código [cinema.c](./cinema.c) propõe uma animação com caracteres conforme 
 ## Solução
 O código com uma solução do problema pode ser encontrado em [./cinema.c](./cinema.c). Para compilá-lo, utilizado o arquivo [Makefile](./Makefile) disponibilizado.
 
-### Destrinchando o código
+### O código
 ```c
 // Hiperparâmetros da aplicação
 #define SLEEP_MAX 2
@@ -79,7 +80,7 @@ void *lanterninha(void *vgarp)
     return NULL;
 }
 ```
-Função da thread lanterninha. a operação de manutenção da sala foi realizada com um sleep aleatório.
+Função da thread lanterninha. A operação de manutenção da sala foi representada com um sleep aleatório.
 
 ```c
 void *espectador(void *vgarp)
@@ -120,7 +121,7 @@ void *espectador(void *vgarp)
 ```
 Função da thread espectador.
 
-c```
+```c
 int main() {
     // Inicia os semáforos
     sem_init(&mutex, 0, 1);
@@ -176,6 +177,8 @@ Sobre o exemplo proposto:
 - Por fim, mais um último espectador tenta entrar na sala
 
 ## Saída
+
+A saída para o código proposto está representada abaixo:
 
 ```
 Dia de Cinema:
@@ -275,3 +278,13 @@ Dia de Cinema:
 | _ _ _ |
 |_______|
 ```
+
+Vamos checar se a animação obedece as regras do problema.
+
+- No máximo 3 espectadores devem estar presentes simultaneamente na sala.
+  -  Dos 4 que tentam entrar na sala no início do programa, somente 3 entram.
+  -  O restante deve aguardar uma vaga ser liberada.
+-  Quando um lanterninha decide fazer a manutenção da sala, ele interrompe a entrada de novos espectadores até que conclua o seu trabalho.
+  -  Note que aquele que estava esperando a sua vez no início, agora espera o fim da manutenção da sala para entrar.
+-  Quando decide fazer a manutenção da sala, o lanterninha espera que a sala se esvazie
+  -  Note que a manutenção só é realizada ap

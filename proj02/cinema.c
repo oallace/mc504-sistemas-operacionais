@@ -124,7 +124,7 @@ int main() {
 
     // Exemplo de um dia de cinema
     pthread_t e1, e2, e3, e4, e5, e6, e7;
-    pthread_t l1, l2;
+    pthread_t l1;
     printf("Dia de Cinema:\n\n");
     imprime_cinema();
     pthread_create(&e1,NULL, espectador,NULL);
@@ -134,10 +134,8 @@ int main() {
     sleep(1);
     pthread_create(&l1,NULL, lanterninha,NULL);
     pthread_create(&e5,NULL, espectador,NULL);
-    sleep(1);
     pthread_create(&e6,NULL, espectador,NULL);
     sleep(1);
-    pthread_create(&l2,NULL, lanterninha,NULL);
     pthread_create(&e7,NULL, espectador,NULL);
     pthread_join(e1,NULL);
     pthread_join(e2,NULL);
@@ -147,7 +145,6 @@ int main() {
     pthread_join(e6,NULL);
     pthread_join(e7,NULL);
     pthread_join(l1,NULL);
-    pthread_join(l2,NULL);
     // Destrói os semáforos utilizados
     sem_destroy(&mutex);
     sem_destroy(&vendaIngresso);

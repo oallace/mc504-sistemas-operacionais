@@ -17,7 +17,8 @@ int emExibcao = 1;
 
 void imprime_cinema()
 {
-    // Semáforo para a sincronização da impressão
+    // Semáforo utilizado para a sincronização da impressão
+    // Impede que caracteres se atropelem para imprimir
     sem_wait(&impressaoLiberada);
     // Imprime a tela do cinema
     putchar('|');
@@ -35,12 +36,7 @@ void imprime_cinema()
     // 
     putchar('\n');
     putchar('|');
-    printf("%*s", N_VAGAS, "");
-    if (emExibcao)
-        putchar(' ');
-    else
-        putchar('L');
-    printf("%*s", N_VAGAS, "");
+    printf("%*s", N_VAGAS * 2 + 1, "");
     putchar('|');
     // Imprime as cadeiras
     putchar('\n');
@@ -103,8 +99,7 @@ void *espectador(void *vgarp)
 
     // Entra na sala
     // Assiste ao filme
-    // sleep(rand() % SLEEP_MAX);
-    sleep(1);
+    sleep(SLEEP_MAX);
     
     // Sai na sala
     sem_wait(&mutex);
@@ -129,16 +124,20 @@ int main() {
 
     // Exemplo de um dia de cinema
     pthread_t e1, e2, e3, e4, e5, e6, e7;
-    pthread_t l1, l2, l3;
+    pthread_t l1, l2;
     printf("Dia de Cinema:\n\n");
     imprime_cinema();
     pthread_create(&e1,NULL, espectador,NULL);
     pthread_create(&e2,NULL, espectador,NULL);
     pthread_create(&e3,NULL, espectador,NULL);
     pthread_create(&e4,NULL, espectador,NULL);
+    sleep(1);
     pthread_create(&l1,NULL, lanterninha,NULL);
     pthread_create(&e5,NULL, espectador,NULL);
+    sleep(1);
     pthread_create(&e6,NULL, espectador,NULL);
+    sleep(1);
+    pthread_create(&l2,NULL, lanterninha,NULL);
     pthread_create(&e7,NULL, espectador,NULL);
     pthread_join(e1,NULL);
     pthread_join(e2,NULL);
@@ -148,6 +147,7 @@ int main() {
     pthread_join(e6,NULL);
     pthread_join(e7,NULL);
     pthread_join(l1,NULL);
+    pthread_join(l2,NULL);
     // Destrói os semáforos utilizados
     sem_destroy(&mutex);
     sem_destroy(&vendaIngresso);

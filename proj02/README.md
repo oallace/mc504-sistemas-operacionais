@@ -15,3 +15,20 @@ Além disso, o lanterninha responsável pela sala pode adentrar para fazer a man
 
 o código proposto, [cinema.c](./cinema.c), propõe uma animação com caracteres conforme exemplificado abaixo:
 
+```
+||.....||
+|       |
+| * _ _ |
+|_______|
+```
+- Indica que há um filme em exibição em uma sala com 3 vagas e que uma pessoa assiste naquele momento.
+  - __*__ são pessoas assistindo ao filme
+  - **_** indica cadeiras vazias
+
+```
+||#####||
+|       |
+| _ _ _ |
+|_______|
+```
+- Indica que a sala está em manutenção. Idealmente todas as cadeiras devem estar vazias

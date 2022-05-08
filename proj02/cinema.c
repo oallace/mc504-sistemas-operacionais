@@ -10,13 +10,14 @@
 #define N_VAGAS 3
 
 // Semáforos usados durante a aplicação
-sem_t mutex, haVaga, salaVazia, impressaoLiberada;
+sem_t mutex, haVaga, vendaIngresso, salaVazia, impressaoLiberada;
 // Contador de pessoas no cinema
 int espectadores = 0;
 int emExibcao = 1;
 
 void imprime_cinema()
 {
+    // Semáforo para a sincronização da impressão
     sem_wait(&impressaoLiberada);
     // Imprime a tela do cinema
     putchar('|');
@@ -63,8 +64,8 @@ void imprime_cinema()
 
 void *lanterninha(void *vgarp)
 {
-    // Indica que nao há vaga no cinema devido à manutenção da sala
-    sem_wait(&haVaga);
+    // Interrompe a venda de ingressos
+    sem_wait(&vendaIngresso);
     // Aguarda a saída de todos os espectadores da sala
     sem_wait(&salaVazia);
 
@@ -77,7 +78,7 @@ void *lanterninha(void *vgarp)
     // Sai da Sala
     sem_post(&salaVazia);
     // Retoma as atividades da sala
-    sem_post(&haVaga);
+    sem_post(&vendaIngresso);
     return NULL;
 }
 
@@ -86,6 +87,9 @@ void *espectador(void *vgarp)
 
     // Espera uma vaga no cinema
     sem_wait(&haVaga);
+    // Compra um ingresso
+    sem_wait(&vendaIngresso);
+    sem_post(&vendaIngresso);
     // Alterações na contagem de espectadores
     sem_wait(&mutex);
     espectadores++;
@@ -93,12 +97,14 @@ void *espectador(void *vgarp)
         sem_wait(&salaVazia); // Indica que a sala não está mais vazia
     if (espectadores < N_VAGAS)
         sem_post(&haVaga);
+    // Mostra o estado do cinema com a entrada do espectador
     imprime_cinema();
     sem_post(&mutex);
 
     // Entra na sala
     // Assiste ao filme
-    sleep(rand() % SLEEP_MAX);
+    // sleep(rand() % SLEEP_MAX);
+    sleep(1);
     
     // Sai na sala
     sem_wait(&mutex);
@@ -107,6 +113,7 @@ void *espectador(void *vgarp)
         sem_post(&salaVazia); // Indica que a sala está vazia
     if (espectadores == N_VAGAS - 1) // Liberou uma cadeira na sala
         sem_post(&haVaga);
+    // Mostra o estado do cinema com a saída do espectador
     imprime_cinema();
     sem_post(&mutex);
     return NULL;
@@ -115,6 +122,7 @@ void *espectador(void *vgarp)
 int main() {
     // Inicia os semáforos
     sem_init(&mutex, 0, 1);
+    sem_init(&vendaIngresso, 0, 1);
     sem_init(&haVaga, 0, 1);
     sem_init(&salaVazia, 0, 1);
     sem_init(&impressaoLiberada, 0, 1);
@@ -126,10 +134,9 @@ int main() {
     imprime_cinema();
     pthread_create(&e1,NULL, espectador,NULL);
     pthread_create(&e2,NULL, espectador,NULL);
-    pthread_create(&l1,NULL, lanterninha,NULL);
     pthread_create(&e3,NULL, espectador,NULL);
-    pthread_create(&l2,NULL, lanterninha,NULL);
     pthread_create(&e4,NULL, espectador,NULL);
+    pthread_create(&l1,NULL, lanterninha,NULL);
     pthread_create(&e5,NULL, espectador,NULL);
     pthread_create(&e6,NULL, espectador,NULL);
     pthread_create(&e7,NULL, espectador,NULL);
@@ -141,9 +148,9 @@ int main() {
     pthread_join(e6,NULL);
     pthread_join(e7,NULL);
     pthread_join(l1,NULL);
-    pthread_join(l2,NULL);
     // Destrói os semáforos utilizados
     sem_destroy(&mutex);
+    sem_destroy(&vendaIngresso);
     sem_destroy(&haVaga);
     sem_destroy(&salaVazia);
     sem_destroy(&impressaoLiberada);

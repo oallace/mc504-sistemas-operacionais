@@ -13,7 +13,7 @@ Além disso, o lanterninha responsável pela sala pode adentrar para fazer a man
 
 ## Animação
 
-o código proposto, [cinema.c](./cinema.c), propõe uma animação com caracteres conforme exemplificado abaixo:
+o código [cinema.c](./cinema.c) propõe uma animação com caracteres conforme exemplificado abaixo:
 
 ```
 ||.....||
@@ -33,7 +33,21 @@ o código proposto, [cinema.c](./cinema.c), propõe uma animação com caractere
 ```
 - Indica que a sala está em manutenção. Idealmente todas as cadeiras devem estar vazias.
 
-## Código
+## Solução
+O código com uma solução do problema pode ser encontrado em [./cinema.c](./cinema.c). Para compilá-lo, utilizado o arquivo [Makefile](./Makefile) disponibilizado.
+
+### Destrinchando o código
+```
+// Hiperparâmetros da aplicação
+#define SLEEP_MAX 2
+#define N_VAGAS 3
+
+// Semáforos usados durante a aplicação
+sem_t mutex, haVaga, vendaIngresso, salaVazia, impressaoLiberada;
+// Contador de pessoas no cinema
+int espectadores = 0;
+int emExibcao = 1;
+
 
 ## Saída
 
